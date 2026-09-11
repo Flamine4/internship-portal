@@ -14,6 +14,7 @@ function Administration() {
     verifierAdmin()
   }, [])
 
+  // Vérifier que l'utilisateur est administrateur
   async function verifierAdmin() {
     const {
       data: { user },
@@ -31,7 +32,9 @@ function Administration() {
       .single()
 
     if (error || profil?.role !== 'admin') {
-      setMessage("Accès refusé. Cette page est réservée à l'administrateur.")
+      setMessage(
+        "Accès refusé. Cette page est réservée à l'administrateur."
+      )
       setLoading(false)
       return
     }
@@ -39,6 +42,7 @@ function Administration() {
     await chargerDonnees()
   }
 
+  // Charger les candidatures et les paramètres du recrutement
   async function chargerDonnees() {
     const { data, error } = await supabase
       .from('applications')
@@ -53,24 +57,35 @@ function Administration() {
       .order('created_at', { ascending: false })
 
     if (error) {
-      setMessage('Impossible de récupérer les candidatures.')
+      setMessage(
+        `Impossible de récupérer les candidatures : ${error.message}`
+      )
       setLoading(false)
       return
     }
 
     setCandidatures(data || [])
 
-    const { data: settings } = await supabase
+    const { data: settings, error: settingsError } = await supabase
       .from('recruitment_settings')
       .select('*')
       .eq('id', 1)
       .maybeSingle()
 
+    if (settingsError) {
+      setMessage(
+        `Impossible de récupérer les paramètres : ${settingsError.message}`
+      )
+    }
+
     setRecrutement(settings)
     setLoading(false)
   }
 
+  // Modifier le statut d'une candidature
   async function modifierStatut(applicationId, nouveauStatut) {
+    setMessage('')
+
     const { error } = await supabase
       .from('applications')
       .update({
@@ -80,15 +95,19 @@ function Administration() {
       .eq('id', applicationId)
 
     if (error) {
-      setMessage('Erreur lors de la modification du statut.')
+      setMessage(`Erreur : ${error.message}`)
       return
     }
 
     setMessage('Statut modifié avec succès.')
+
     await chargerDonnees()
   }
 
+  // Modifier les paramètres du recrutement
   async function modifierRecrutement(champ, valeur) {
+    setMessage('')
+
     const { error } = await supabase
       .from('recruitment_settings')
       .update({
@@ -98,27 +117,40 @@ function Administration() {
       .eq('id', 1)
 
     if (error) {
-      setMessage('Erreur lors de la modification.')
+      setMessage(`Erreur : ${error.message}`)
       return
     }
 
-    await chargerDonnees()
+    // Mettre immédiatement l'affichage à jour
+    setRecrutement((ancien) => ({
+      ...ancien,
+      [champ]: valeur,
+    }))
+
+    setMessage('Modification enregistrée avec succès.')
   }
 
+  // Déconnexion
   async function handleLogout() {
     await supabase.auth.signOut()
     navigate('/connexion')
   }
 
+  // Chargement
   if (loading) {
     return <p>Chargement...</p>
   }
 
-  if (message && candidatures.length === 0) {
+  // Accès refusé
+  if (
+    message.includes('Accès refusé')
+  ) {
     return (
       <div>
         <h1>Administration</h1>
+
         <p>{message}</p>
+
         <button onClick={() => navigate('/dashboard')}>
           Retour
         </button>
@@ -137,13 +169,16 @@ function Administration() {
       </header>
 
       <main>
+        {/* GESTION DU RECRUTEMENT */}
         <section>
           <h2>Gestion du recrutement</h2>
 
           <p>
             Recrutement :{' '}
             <strong>
-              {recrutement?.is_active ? 'Ouvert' : 'Fermé'}
+              {recrutement?.is_active
+                ? 'Ouvert'
+                : 'Fermé'}
             </strong>
           </p>
 
@@ -162,7 +197,9 @@ function Administration() {
 
           <p>
             Nombre de places disponibles :{' '}
-            <strong>{recrutement?.available_spots ?? 0}</strong>
+            <strong>
+              {recrutement?.available_spots ?? 0}
+            </strong>
           </p>
 
           <button
@@ -189,13 +226,20 @@ function Administration() {
           >
             +
           </button>
+
+          {message && (
+            <p>{message}</p>
+          )}
         </section>
 
+        {/* CANDIDATURES */}
         <section>
           <h2>Candidatures</h2>
 
           {candidatures.length === 0 ? (
-            <p>Aucune candidature pour le moment.</p>
+            <p>
+              Aucune candidature pour le moment.
+            </p>
           ) : (
             candidatures.map((candidature) => (
               <article key={candidature.id}>
@@ -206,25 +250,34 @@ function Administration() {
                 </h3>
 
                 <p>
-                  École : {candidature.profiles?.school || 'Non renseignée'}
+                  École :{' '}
+                  {candidature.profiles?.school ||
+                    'Non renseignée'}
                 </p>
 
                 <p>
                   Spécialité :{' '}
-                  {candidature.profiles?.specialty || 'Non renseignée'}
+                  {candidature.profiles?.specialty ||
+                    'Non renseignée'}
                 </p>
 
                 <p>
-                  Période : {candidature.internship_period}
+                  Période :{' '}
+                  {candidature.internship_period}
                 </p>
 
                 <p>
-                  Statut actuel : <strong>{candidature.status}</strong>
+                  Statut actuel :{' '}
+                  <strong>
+                    {candidature.status}
+                  </strong>
                 </p>
 
                 <label>
                   Modifier le statut :
                 </label>
+
+                <br />
 
                 <select
                   value={candidature.status}
@@ -238,15 +291,19 @@ function Administration() {
                   <option value="registration">
                     Inscription
                   </option>
+
                   <option value="challenge">
                     Challenge
                   </option>
+
                   <option value="interview">
                     Entretien
                   </option>
+
                   <option value="admission">
                     Admission
                   </option>
+
                   <option value="topic_definition">
                     Définition du sujet
                   </option>
@@ -255,8 +312,6 @@ function Administration() {
             ))
           )}
         </section>
-
-        {message && <p>{message}</p>}
       </main>
     </div>
   )
