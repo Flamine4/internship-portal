@@ -5,6 +5,7 @@ import { supabase } from '../services/supabaseClient'
 function TableauDeBord() {
   const [profil, setProfil] = useState(null)
   const [candidature, setCandidature] = useState(null)
+  const [commentaires, setCommentaires] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
 
@@ -15,6 +16,9 @@ function TableauDeBord() {
   }, [])
 
   async function chargerDonnees() {
+    setLoading(true)
+    setMessage('')
+
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -24,6 +28,7 @@ function TableauDeBord() {
       return
     }
 
+    // Récupérer le profil
     const { data: profilData, error: profilError } = await supabase
       .from('profiles')
       .select('*')
@@ -38,11 +43,13 @@ function TableauDeBord() {
 
     setProfil(profilData)
 
-    const { data: candidatureData, error: candidatureError } = await supabase
-      .from('applications')
-      .select('*')
-      .eq('candidate_id', user.id)
-      .maybeSingle()
+    // Récupérer la candidature
+    const { data: candidatureData, error: candidatureError } =
+      await supabase
+        .from('applications')
+        .select('*')
+        .eq('candidate_id', user.id)
+        .maybeSingle()
 
     if (candidatureError) {
       setMessage('Impossible de récupérer ta candidature.')
@@ -51,6 +58,31 @@ function TableauDeBord() {
     }
 
     setCandidature(candidatureData)
+
+    // Récupérer les commentaires si une candidature existe
+    if (candidatureData) {
+      const { data: commentairesData, error: commentairesError } =
+        await supabase
+          .from('comments')
+          .select(`
+            *,
+            profiles (
+              full_name,
+              role
+            )
+          `)
+          .eq('application_id', candidatureData.id)
+          .order('created_at', { ascending: true })
+
+      if (commentairesError) {
+        setMessage(
+          `Impossible de récupérer les commentaires : ${commentairesError.message}`
+        )
+      } else {
+        setCommentaires(commentairesData || [])
+      }
+    }
+
     setLoading(false)
   }
 
@@ -86,16 +118,13 @@ function TableauDeBord() {
       </header>
 
       <main>
+        {/* Bienvenue */}
         <section>
-          <h2>
-            Bonjour {profil?.full_name} 👋
-          </h2>
-
-          <p>
-            Bienvenue dans ton espace candidat.
-          </p>
+          <h2>Bonjour {profil?.full_name} 👋</h2>
+          <p>Bienvenue dans ton espace candidat.</p>
         </section>
 
+        {/* Informations */}
         <section>
           <h2>Mes informations</h2>
 
@@ -115,6 +144,7 @@ function TableauDeBord() {
           </p>
         </section>
 
+        {/* Candidature */}
         <section>
           <h2>Ma candidature</h2>
 
@@ -158,6 +188,42 @@ function TableauDeBord() {
             </div>
           )}
         </section>
+
+        {/* Commentaires */}
+        {candidature && (
+          <section>
+            <h2>Commentaires de l'administration</h2>
+
+            {commentaires.length === 0 ? (
+              <p>
+                Aucun commentaire pour le moment.
+              </p>
+            ) : (
+              <div>
+                {commentaires.map((commentaire) => (
+                  <div key={commentaire.id}>
+                    <p>
+                      <strong>
+                        {commentaire.profiles?.full_name ||
+                          'Administration'}
+                      </strong>
+                    </p>
+
+                    <p>{commentaire.content}</p>
+
+                    <small>
+                      {new Date(
+                        commentaire.created_at
+                      ).toLocaleString('fr-FR')}
+                    </small>
+
+                    <hr />
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
 
         {message && <p>{message}</p>}
       </main>
