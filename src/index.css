@@ -1602,3 +1602,662 @@ tr:hover td {
     padding: 18px;
   }
 }
+
+/* =====================================================
+   ADMINISTRATION - VERSION FINALE
+   ===================================================== */
+
+.admin-page {
+  min-height: 100vh;
+  background: #f4f7fb;
+}
+
+.admin-header {
+  background: #172554;
+  color: white;
+  padding: 0 30px;
+}
+
+.admin-header-content {
+  width: min(1200px, 100%);
+  min-height: 76px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: white;
+  color: #172554;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.admin-brand h1 {
+  color: white;
+  margin: 0;
+  font-size: 19px;
+}
+
+.admin-brand span {
+  color: #c7d2fe;
+  font-size: 12px;
+}
+
+.admin-main {
+  width: min(1200px, calc(100% - 40px));
+  margin: 30px auto 60px;
+}
+
+/* Navigation */
+
+.admin-nav {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: white;
+  border: 1px solid #e5e9f0;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.admin-nav button {
+  flex: 1;
+  background: transparent;
+  color: #667085;
+  padding: 12px 15px;
+}
+
+.admin-nav button:hover {
+  background: #f8fafc;
+  color: #172033;
+  transform: none;
+}
+
+.admin-nav button.active {
+  background: #172554;
+  color: white;
+}
+
+/* Message */
+
+.admin-message {
+  margin-bottom: 20px;
+  padding: 13px 16px;
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+  color: #027a48;
+  border-radius: 10px;
+}
+
+/* Bienvenue */
+
+.admin-welcome {
+  background: linear-gradient(135deg, #172554, #2563eb);
+  color: white;
+  border-radius: 17px;
+  padding: 30px;
+  margin-bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(23, 37, 84, 0.15);
+}
+
+.admin-welcome h2 {
+  color: white;
+  margin: 5px 0 7px;
+  font-size: 28px;
+}
+
+.admin-welcome p {
+  margin: 0;
+  color: #dbeafe;
+}
+
+.admin-label {
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.admin-welcome .admin-label {
+  color: #bfdbfe;
+}
+
+.admin-welcome-icon {
+  width: 65px;
+  height: 65px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+/* Statistiques */
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.admin-stat-card {
+  background: white;
+  border: 1px solid #e5e9f0;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.stat-icon {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.admin-stat-card span {
+  display: block;
+  color: #667085;
+  font-size: 12px;
+}
+
+.admin-stat-card strong {
+  display: block;
+  color: #172033;
+  font-size: 28px;
+  margin-top: 4px;
+}
+
+/* Sections */
+
+.admin-section {
+  background: white;
+  border: 1px solid #e5e9f0;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+}
+
+.admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.admin-section-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.admin-section-header p {
+  color: #667085;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.admin-count {
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Résumé recrutement */
+
+.admin-recruitment-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.recruitment-status-box {
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e9f0;
+  border-radius: 11px;
+}
+
+.recruitment-status-box span {
+  display: block;
+  color: #667085;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.recruitment-status-box strong {
+  font-size: 20px;
+}
+
+.recruitment-open {
+  color: #027a48;
+}
+
+.recruitment-closed {
+  color: #b42318;
+}
+
+/* Tableau */
+
+.admin-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 850px;
+  border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px;
+  border-bottom: 1px solid #e5e9f0;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #f8fafc;
+  color: #344054;
+  font-size: 12px;
+}
+
+.admin-table td {
+  color: #475467;
+  font-size: 13px;
+}
+
+.admin-table tbody tr:hover td {
+  background: #f8fafc;
+}
+
+.admin-table td strong {
+  color: #172033;
+}
+
+.admin-status {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.admin-action-button {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.admin-action-button:hover {
+  background: #dbeafe;
+  transform: none;
+}
+
+/* Vide */
+
+.admin-empty {
+  text-align: center;
+  padding: 45px 20px;
+}
+
+.admin-empty > div {
+  font-size: 35px;
+  margin-bottom: 10px;
+}
+
+.admin-empty h3 {
+  margin: 0 0 5px;
+}
+
+.admin-empty p {
+  color: #667085;
+  margin: 0;
+}
+
+/* Recrutement */
+
+.recruitment-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.recruitment-control {
+  padding: 22px;
+  border: 1px solid #e5e9f0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.recruitment-control h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+
+.recruitment-control p {
+  color: #667085;
+  font-size: 13px;
+  margin-top: 0;
+}
+
+.recruitment-toggle {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.recruitment-toggle button {
+  width: auto;
+}
+
+.recruitment-number {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recruitment-number button {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 21px;
+}
+
+.recruitment-number strong {
+  min-width: 45px;
+  text-align: center;
+  font-size: 25px;
+}
+
+/* Modal */
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-modal {
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 17px;
+  padding: 27px;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.25);
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.admin-modal-header h2 {
+  margin: 4px 0 0;
+  font-size: 23px;
+}
+
+.admin-close-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: #f1f5f9;
+  color: #475467;
+}
+
+.admin-close-button:hover {
+  background: #e2e8f0;
+  color: #172033;
+  transform: none;
+}
+
+/* Détails candidat */
+
+.candidate-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 23px;
+}
+
+.candidate-detail-grid > div {
+  padding: 15px;
+  border: 1px solid #e5e9f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.candidate-detail-grid span {
+  display: block;
+  color: #667085;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+.candidate-detail-grid strong {
+  font-size: 14px;
+  color: #172033;
+}
+
+/* Statut candidat */
+
+.candidate-status-section {
+  padding-top: 20px;
+  border-top: 1px solid #e5e9f0;
+}
+
+.candidate-status-section label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.candidate-status-section select {
+  max-width: 350px;
+}
+
+/* Commentaires */
+
+.admin-comments-section {
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e9f0;
+}
+
+.comments-section-title h3 {
+  margin: 0;
+}
+
+.comments-section-title p {
+  color: #667085;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.admin-no-comments {
+  padding: 18px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px dashed #d8dee9;
+  border-radius: 10px;
+  color: #667085;
+  font-size: 13px;
+}
+
+.admin-comments-list {
+  margin-top: 15px;
+}
+
+.admin-comment {
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #e5e9f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.admin-comment strong {
+  color: #172033;
+  font-size: 13px;
+}
+
+.admin-comment small {
+  display: block;
+  margin-top: 3px;
+  color: #98a2b3;
+  font-size: 11px;
+}
+
+.admin-comment p {
+  margin: 10px 0 0;
+  color: #475467;
+  font-size: 13px;
+}
+
+.admin-comment-form {
+  margin-top: 18px;
+}
+
+.admin-comment-form textarea {
+  min-height: 100px;
+  resize: vertical;
+  margin-bottom: 8px;
+}
+
+.admin-comment-form button {
+  width: auto;
+}
+
+/* Mobile */
+
+@media (max-width: 850px) {
+
+  .admin-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .recruitment-card {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .admin-header {
+    padding: 0 15px;
+  }
+
+  .admin-header-content {
+    min-height: 70px;
+  }
+
+  .admin-brand h1 {
+    font-size: 16px;
+  }
+
+  .admin-brand span {
+    font-size: 10px;
+  }
+
+  .admin-header .logout-button {
+    width: auto;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .admin-main {
+    width: calc(100% - 24px);
+    margin-top: 18px;
+  }
+
+  .admin-nav {
+    overflow-x: auto;
+  }
+
+  .admin-nav button {
+    min-width: 150px;
+    white-space: nowrap;
+  }
+
+  .admin-welcome {
+    padding: 22px;
+  }
+
+  .admin-welcome h2 {
+    font-size: 23px;
+  }
+
+  .admin-welcome-icon {
+    display: none;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-section {
+    padding: 18px;
+  }
+
+  .admin-recruitment-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-modal {
+    padding: 20px;
+  }
+
+  .recruitment-toggle {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .recruitment-toggle button {
+    width: 100%;
+  }
+
+  .admin-comment-form button {
+    width: 100%;
+  }
+}
